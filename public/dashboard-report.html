@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistik Mading - GUNDAR</title>
+  <!-- Typography & Icons -->
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Floating Pill Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">GUNDAR <span>Mading</span></a>
+      <nav>
+        <ul>
+          <li><a href="/">Papan Mading</a></li>
+          <li><a href="/dashboard-report.html" class="active">Statistik</a></li>
+          <li id="auth-nav-item">
+            <a href="/login.html" class="btn-login">Login Admin</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container" style="padding-top: 5rem;">
+    
+    <!-- Hero Section / Title -->
+    <div style="margin-bottom: 3.5rem;">
+      <h1 style="font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 0.75rem;">Grafik & Laporan Statistik</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px;">Visualisasi real-time minat baca dan kepadatan konten di Portal Mading Online.</p>
+    </div>
+
+    <!-- Metrics Cards (Summary) -->
+    <section class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-val" id="total-articles-val">0</div>
+        <div class="metric-lbl">Total Artikel Terbit</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" id="total-categories-val">0</div>
+        <div class="metric-lbl">Kategori Terdaftar</div>
+      </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-grid">
+      <div class="chart-card">
+        <h3>Grafik Artikel per Kategori</h3>
+        <div class="chart-canvas-container">
+          <canvas id="categoryBarChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Distribusi Kategori Artikel (%)</h3>
+        <div class="chart-canvas-container">
+          <canvas id="categoryPieChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Web App Footer (Attribution to Pram) -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">GUNDAR Mading</div>
+      <p>Dibuat oleh <a href="#" class="footer-link">Pram</a> &copy; 2026. Semua Hak Dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- Animation & Script Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/dashboard-report.js"></script>
+  <script src="/js/motion.js"></script>
+</body>
+</html>

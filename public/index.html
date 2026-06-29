@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GUNDAR Mading Online</title>
+  <!-- Typography & Icons -->
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <!-- Floating Pill Header Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="logo">GUNDAR <span>Mading</span></a>
+      <nav>
+        <ul>
+          <li><a href="/" class="active">Papan Mading</a></li>
+          <li><a href="/dashboard-report.html">Statistik</a></li>
+          <li id="auth-nav-item">
+            <a href="/login.html" class="btn-login">Login Admin</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section (Artistic Asymmetry) -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Papan Mading Digital <br><mark>Sekolah Tinggi GUNDAR</mark></h1>
+      <p>Kumpulan kreativitas, artikel ilmiah, dan info terupdate seputar kampus GUNDAR yang disajikan secara kasual dan interaktif.</p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-visual-card"></div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="container" style="padding-top: 1rem;">
+    
+    <!-- Controls (Search & Filters) -->
+    <section class="controls-bar">
+      <div class="search-wrapper">
+        <input type="text" id="search-input" class="search-input" placeholder="Cari judul atau isi artikel...">
+      </div>
+      <div class="filter-tags" id="filter-tags">
+        <button class="filter-btn active" data-category-id="all">Semua</button>
+      </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section id="board-grid" class="board-grid">
+      <div class="empty-state">
+        <div class="empty-icon">⏳</div>
+        <p>Memuat artikel mading...</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Article Detail Modal -->
+  <div class="modal-overlay" id="detail-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="card-tag tag-custom" id="modal-tag">Kategori</span>
+        <button class="btn-close-modal" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="article-meta">
+          <div class="card-date" id="modal-date">29 Juni 2026</div>
+          <div style="color: var(--text-muted)">•</div>
+          <div class="author-info">
+            <div class="author-avatar" id="modal-avatar">A</div>
+            <span id="modal-author">Admin</span>
+          </div>
+        </div>
+        <h2 class="article-title" id="modal-title">Judul Artikel</h2>
+        <div class="detail-img-wrapper" id="modal-img-container">
+          <img src="" alt="Cover Mading" class="detail-img" id="modal-img">
+        </div>
+        <div class="article-content" id="modal-content">
+          Konten artikel mading akan muncul di sini...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Web App Footer (Attribution to Pram) -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-logo">GUNDAR Mading</div>
+      <p>Dibuat oleh <a href="#" class="footer-link">Pram</a> &copy; 2026. Semua Hak Dilindungi.</p>
+    </div>
+  </footer>
+
+  <!-- Animation & Script Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/board.js"></script>
+  <script src="/js/motion.js"></script>
+</body>
+</html>
