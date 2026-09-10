@@ -9,20 +9,20 @@
     <div>
       <div class="d-flex align-items-center gap-2 mb-1">
         <span class="report-doc-badge">
-          <i class="bi bi-shield-check"></i> Dokumen Sah Terverifikasi
+          <i class="bi bi-shield-check"></i> Dokumen Terverifikasi
         </span>
-        <small class="text-muted font-monospace" style="font-size: 0.775rem;">DOC-MADING-{{ date('Ym') }}-01</small>
+        <span class="text-muted font-monospace small" style="font-size: 0.725rem;">[ DOC-MADING-{{ date('Ym') }}-01 ]</span>
       </div>
-      <h1 class="h4 fw-bold text-dark mb-0">Laporan & Rekapitulasi Eksekutif</h1>
+      <h1 class="h5 fw-bold text-dark mb-0" style="letter-spacing: -0.02em;">Laporan & Rekapitulasi Eksekutif</h1>
       <p class="text-muted small mb-0 mt-1">Dicetak otomatis dari Arsip Resmi DeSiWeM per {{ date('d F Y') }}</p>
     </div>
 
     <div class="report-control-actions">
       <button type="button" class="btn-report-btn" onclick="copySummaryText()" title="Salin ringkasan angka ke clipboard">
-        <i class="bi bi-clipboard-check"></i> Salin Ringkasan
+        <i class="bi bi-copy"></i> Salin Ringkasan
       </button>
       <button type="button" class="btn-report-btn" onclick="downloadCSV()" title="Unduh dataset artikel format CSV">
-        <i class="bi bi-file-earmark-spreadsheet"></i> Export CSV
+        <i class="bi bi-download"></i> Export CSV
       </button>
       <button type="button" class="btn-report-btn btn-report-primary" onclick="window.print()" title="Cetak atau Simpan PDF Resmi">
         <i class="bi bi-printer"></i> Cetak Dokumen PDF
@@ -38,21 +38,21 @@
       <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
         <div class="d-flex align-items-center gap-3">
           <div class="report-kop-logo">
-            <i class="bi bi-journal-bookmark-fill"></i>
+            <i class="bi bi-journal-text"></i>
           </div>
           <div>
             <h2 class="report-kop-title">DeSiWeM</h2>
             <div class="report-kop-subtitle">UNIT PENGELOLA MAJALAH DINDING DIGITAL</div>
             <p class="report-kop-meta">
-              Jl. Margonda Raya No. 100, Depok, Jawa Barat | Surel: redaksi@desiwem.id | Portal: desiwem.id
+              Jl. Margonda Raya No. 100, Depok, Jawa Barat &bull; Surel: redaksi@desiwem.id &bull; Portal: desiwem.id
             </p>
           </div>
         </div>
 
         <div class="text-end d-none d-sm-block">
-          <div class="p-2 border rounded-3 bg-white d-inline-block text-center shadow-xs" style="border-color: #cbd5e1;">
-            <i class="bi bi-qr-code fs-3 text-dark"></i>
-            <span class="d-block font-monospace text-muted" style="font-size: 0.65rem; letter-spacing: 0.05em;">VALIDATED DOC</span>
+          <div class="p-2 border rounded bg-white d-inline-block text-center" style="border-color: #e4e4e7;">
+            <i class="bi bi-qr-code fs-4 text-dark"></i>
+            <span class="d-block font-monospace text-muted" style="font-size: 0.625rem; letter-spacing: 0.08em;">VERIFIED DOC</span>
           </div>
         </div>
       </div>
@@ -60,35 +60,34 @@
 
     <!-- Official Report Banner Title -->
     <div class="report-banner">
-      <h3 class="report-banner-title">LAPORAN REKAPITULASI DOKUMENTASI & DISTRIBUSI KONTEN MADING</h3>
+      <h3 class="report-banner-title">Laporan Rekapitulasi Dokumentasi & Distribusi Konten Mading</h3>
       <p class="report-banner-period">
-        Periode: <strong>{{ date('F Y') }}</strong> &bull; Waktu Sinkronisasi: <strong>{{ date('d F Y, H:i') }} WIB</strong>
+        PERIODE: {{ strtoupper(date('F Y')) }} &bull; SINKRONISASI: {{ date('d/m/Y H:i') }} WIB &bull; STATUS: RESMI
       </p>
     </div>
 
     <!-- Bento Analytics Matrix -->
     <div class="report-bento-grid">
-      <!-- 1. Total Publikasi -->
+      <!-- 01. Total Publikasi -->
       <div class="report-bento-card">
         <div>
           <div class="bento-label">
             <span>Total Publikasi</span>
-            <i class="bi bi-newspaper text-primary"></i>
+            <span class="bento-idx">[ 01 ]</span>
           </div>
           <div class="bento-val">{{ $articles->count() }}</div>
         </div>
         <div class="bento-sub">
-          <span class="badge bg-success-subtle text-success font-monospace me-1">+{{ $articlesThisMonth }}</span>
-          terbit bulan ini
+          <span class="report-badge-mono me-1">+{{ $articlesThisMonth }}</span> terbit bulan ini
         </div>
       </div>
 
-      <!-- 2. Kategori Aktif -->
+      <!-- 02. Kategori Aktif -->
       <div class="report-bento-card">
         <div>
           <div class="bento-label">
             <span>Kategori Terkelola</span>
-            <i class="bi bi-folder2-open text-info"></i>
+            <span class="bento-idx">[ 02 ]</span>
           </div>
           <div class="bento-val">{{ $categories->count() }}</div>
         </div>
@@ -97,14 +96,14 @@
         </div>
       </div>
 
-      <!-- 3. Kategori Terpopuler -->
+      <!-- 03. Kategori Terpopuler -->
       <div class="report-bento-card">
         <div>
           <div class="bento-label">
             <span>Kategori Teratas</span>
-            <i class="bi bi-trophy text-warning"></i>
+            <span class="bento-idx">[ 03 ]</span>
           </div>
-          <div class="bento-val text-truncate" style="font-size: 1.45rem;" title="{{ $topCategory->name ?? '-' }}">
+          <div class="bento-val text-truncate" style="font-size: 1.35rem;" title="{{ $topCategory->name ?? '-' }}">
             {{ $topCategory->name ?? '-' }}
           </div>
         </div>
@@ -113,19 +112,19 @@
         </div>
       </div>
 
-      <!-- 4. Kontributor Utama -->
+      <!-- 04. Kontributor Utama -->
       <div class="report-bento-card">
         <div>
           <div class="bento-label">
             <span>Penulis Teraktif</span>
-            <i class="bi bi-person-check text-success"></i>
+            <span class="bento-idx">[ 04 ]</span>
           </div>
-          <div class="bento-val text-truncate" style="font-size: 1.45rem;" title="{{ $topAuthor->name ?? 'Admin' }}">
+          <div class="bento-val text-truncate" style="font-size: 1.35rem;" title="{{ $topAuthor->name ?? 'Admin' }}">
             {{ $topAuthor->name ?? 'Admin' }}
           </div>
         </div>
         <div class="bento-sub">
-          {{ $topAuthor->articles_count ?? 0 }} artikel diverifikasi
+          {{ $topAuthor->articles_count ?? 0 }} artikel terverifikasi
         </div>
       </div>
     </div>
@@ -134,10 +133,12 @@
     @php $totalArt = max(1, $articles->count()); @endphp
     <div class="report-dist-box">
       <div class="d-flex align-items-center justify-content-between mb-3">
-        <h4 class="h6 fw-bold text-dark mb-0">
-          <i class="bi bi-bar-chart-steps text-primary me-1"></i> Proporsi Distribusi Artikel per Kategori
+        <h4 class="small fw-bold text-uppercase font-monospace text-dark mb-0" style="letter-spacing: 0.05em;">
+          Proporsi Distribusi Artikel per Kategori
         </h4>
-        <span class="text-muted small">Total: <strong>{{ $articles->count() }}</strong> Tulisan Terbit</span>
+        <span class="text-muted font-monospace small" style="font-size: 0.75rem;">
+          TOTAL: {{ $articles->count() }} PUBLIKASI
+        </span>
       </div>
 
       <div>
@@ -148,7 +149,7 @@
           <div class="report-dist-item">
             <div class="report-dist-header">
               <span>{{ $cat->name }}</span>
-              <span class="font-monospace text-muted">{{ $cat->articles_count }} Artikel ({{ $percentage }}%)</span>
+              <span class="font-monospace text-muted" style="font-size: 0.75rem;">{{ $cat->articles_count }} artikel ({{ $percentage }}%)</span>
             </div>
             <div class="report-bar-wrap">
               <div class="report-bar-fill" style="width: {{ $percentage }}%;"></div>
@@ -161,32 +162,32 @@
     <!-- Category Breakdown Table -->
     <div class="mb-5 print-avoid-break">
       <div class="d-flex align-items-center justify-content-between mb-2">
-        <h4 class="h6 fw-bold text-dark mb-0">
-          <i class="bi bi-folder-check text-primary me-1"></i> Rincian Kategori Mading
+        <h4 class="small fw-bold text-uppercase font-monospace text-dark mb-0" style="letter-spacing: 0.05em;">
+          Rincian Matriks Kategori
         </h4>
-        <span class="badge bg-light text-dark border font-monospace">{{ $categories->count() }} Kategori</span>
+        <span class="report-badge-mono">{{ $categories->count() }} Kategori</span>
       </div>
-      <div class="table-responsive border rounded-3 overflow-hidden">
+      <div class="report-table-wrap">
         <table class="report-table">
           <thead>
             <tr>
-              <th style="width: 6%;">No</th>
-              <th style="width: 25%;">Nama Kategori</th>
-              <th style="width: 43%;">Deskripsi</th>
-              <th style="width: 14%; text-align: center;">Jumlah Artikel</th>
-              <th style="width: 12%; text-align: center;">Proporsi</th>
+              <th style="width: 7%;">No</th>
+              <th style="width: 25%;">Kategori</th>
+              <th style="width: 42%;">Deskripsi</th>
+              <th style="width: 13%; text-align: center;">Jumlah</th>
+              <th style="width: 13%; text-align: right;">Proporsi</th>
             </tr>
           </thead>
           <tbody>
             @foreach($categories as $index => $cat)
               @php $percentage = round(($cat->articles_count / $totalArt) * 100, 1); @endphp
               <tr>
-                <td class="font-monospace text-muted">{{ $index + 1 }}</td>
-                <td class="fw-bold text-dark">{{ $cat->name }}</td>
-                <td class="text-muted small">{{ $cat->description ?: '-' }}</td>
-                <td class="text-center font-monospace fw-bold text-dark">{{ $cat->articles_count }}</td>
-                <td class="text-center">
-                  <span class="badge bg-light text-dark border font-monospace">
+                <td class="font-monospace text-muted">{{ sprintf('%02d', $index + 1) }}</td>
+                <td class="fw-semibold text-dark">{{ $cat->name }}</td>
+                <td class="text-muted small">{{ $cat->description ?: '—' }}</td>
+                <td class="text-center font-monospace fw-semibold text-dark">{{ $cat->articles_count }}</td>
+                <td class="text-end">
+                  <span class="report-badge-mono">
                     {{ $percentage }}%
                   </span>
                 </td>
@@ -201,10 +202,10 @@
     <div class="mb-4">
       <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-3">
         <div>
-          <h4 class="h6 fw-bold text-dark mb-0">
-            <i class="bi bi-journal-text text-primary me-1"></i> Katalog Rekapitulasi Artikel
+          <h4 class="small fw-bold text-uppercase font-monospace text-dark mb-0" style="letter-spacing: 0.05em;">
+            Katalog Rekapitulasi Artikel
           </h4>
-          <p class="text-muted small mb-0">Daftar lengkap seluruh materi publikasi mading aktif</p>
+          <p class="text-muted small mb-0 mt-0.5">Daftar lengkap seluruh materi publikasi mading aktif</p>
         </div>
       </div>
 
@@ -227,33 +228,32 @@
         </div>
       </div>
 
-      <div class="table-responsive border rounded-3 overflow-hidden">
+      <div class="report-table-wrap">
         <table class="report-table" id="reportArticlesTable">
           <thead>
             <tr>
-              <th style="width: 5%;">No</th>
+              <th style="width: 6%;">No</th>
               <th style="width: 44%;">Judul Artikel</th>
               <th style="width: 18%;">Kategori</th>
               <th style="width: 18%;">Penulis</th>
-              <th style="width: 15%; text-align: right;">Tanggal Terbit</th>
+              <th style="width: 14%; text-align: right;">Tanggal Terbit</th>
             </tr>
           </thead>
           <tbody>
             @forelse($articles as $idx => $art)
               <tr class="report-article-row" data-category="{{ $art->category->name ?? 'Umum' }}">
-                <td class="font-monospace text-muted">{{ $idx + 1 }}</td>
+                <td class="font-monospace text-muted">{{ sprintf('%02d', $idx + 1) }}</td>
                 <td>
-                  <div class="fw-bold text-dark article-title-cell">{{ $art->title }}</div>
+                  <div class="fw-semibold text-dark article-title-cell">{{ $art->title }}</div>
                 </td>
                 <td>
-                  <span class="badge bg-light text-dark border article-cat-cell">
+                  <span class="report-badge-mono article-cat-cell">
                     {{ $art->category->name ?? 'Umum' }}
                   </span>
                 </td>
                 <td>
                   <div class="d-flex align-items-center gap-1.5">
-                    <i class="bi bi-person-circle text-muted"></i>
-                    <span class="article-author-cell">{{ $art->author->name ?? 'Admin' }}</span>
+                    <span class="article-author-cell small text-muted">{{ $art->author->name ?? 'Admin' }}</span>
                   </div>
                 </td>
                 <td class="text-end font-monospace text-muted small article-date-cell">
@@ -271,7 +271,7 @@
         </table>
       </div>
       <div id="no-results-msg" class="text-center text-muted py-3 d-none">
-        <small>Tidak ada artikel yang cocok dengan filter pencarian.</small>
+        <small class="font-monospace">Tidak ada artikel yang cocok dengan kriteria pencarian.</small>
       </div>
     </div>
 
@@ -279,17 +279,17 @@
     <div class="report-sign-block print-avoid-break">
       <div class="row align-items-end">
         <div class="col-7">
-          <div class="small fw-bold text-dark mb-1">Catatan Dokumen Akademik:</div>
-          <p class="text-muted small mb-0" style="line-height: 1.5;">
+          <div class="small fw-bold text-uppercase font-monospace text-dark mb-1" style="font-size: 0.725rem; letter-spacing: 0.06em;">Catatan Dokumen Akademik</div>
+          <p class="text-muted small mb-0" style="line-height: 1.6; max-width: 90%;">
             Laporan rekapitulasi data ini diterbitkan secara elektronik oleh Sistem Informasi Majalah Dinding Digital DeSiWeM dan diakui sebagai arsip dokumentasi resmi.
           </p>
         </div>
         <div class="col-5 text-end">
-          <p class="mb-1 text-dark small">Depok, {{ date('d F Y') }}</p>
-          <p class="fw-bold text-dark mb-5">Ketua Pengelola Mading Digital,</p>
+          <p class="mb-1 text-dark small font-monospace">Depok, {{ date('d F Y') }}</p>
+          <p class="fw-semibold text-dark mb-5 small">Ketua Pengelola Mading Digital,</p>
           <br><br>
-          <p class="fw-bold text-dark mb-0"><u>PAMBUDIANSYAH</u></p>
-          <small class="text-muted font-monospace">NIP: 19880214 202601 1 002</small>
+          <p class="fw-bold text-dark mb-0 font-monospace"><u>PAMBUDIANSYAH</u></p>
+          <small class="text-muted font-monospace" style="font-size: 0.7rem;">NIP: 19880214 202601 1 002</small>
         </div>
       </div>
     </div>
