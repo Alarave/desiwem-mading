@@ -6,26 +6,33 @@
 <div class="container-fluid px-0">
   <!-- Top Command Toolbar (Hidden on Print) -->
   <div class="report-control-bar no-print">
-    <div>
+    <div class="report-control-left">
       <div class="d-flex align-items-center gap-2 mb-1">
-        <span class="report-doc-badge">
-          <i class="bi bi-shield-check"></i> Dokumen Terverifikasi
+        <span class="report-status-pill">
+          <span class="status-pulse-dot"></span>
+          Dokumen Terverifikasi
         </span>
         <span class="text-muted font-monospace small" style="font-size: 0.725rem;">[ DOC-MADING-{{ date('Ym') }}-01 ]</span>
       </div>
-      <h1 class="h5 fw-bold text-dark mb-0" style="letter-spacing: -0.02em;">Laporan & Rekapitulasi Eksekutif</h1>
-      <p class="text-muted small mb-0 mt-1">Dicetak otomatis dari Arsip Resmi DeSiWeM per {{ date('d F Y') }}</p>
+      <h1 class="report-control-title">Laporan & Rekapitulasi Eksekutif</h1>
+      <p class="report-control-meta">
+        <i class="bi bi-clock-history"></i>
+        <span>Dicetak otomatis dari Arsip Resmi DeSiWeM &bull; {{ date('d F Y') }}</span>
+      </p>
     </div>
 
     <div class="report-control-actions">
       <button type="button" class="btn-report-btn" onclick="copySummaryText()" title="Salin ringkasan angka ke clipboard">
-        <i class="bi bi-copy"></i> Salin Ringkasan
+        <i class="bi bi-copy"></i>
+        <span>Salin Ringkasan</span>
       </button>
       <button type="button" class="btn-report-btn" onclick="downloadCSV()" title="Unduh dataset artikel format CSV">
-        <i class="bi bi-download"></i> Export CSV
+        <i class="bi bi-download"></i>
+        <span>Export CSV</span>
       </button>
       <button type="button" class="btn-report-btn btn-report-primary" onclick="window.print()" title="Cetak atau Simpan PDF Resmi">
-        <i class="bi bi-printer"></i> Cetak Dokumen PDF
+        <i class="bi bi-printer"></i>
+        <span>Cetak Dokumen PDF</span>
       </button>
     </div>
   </div>
