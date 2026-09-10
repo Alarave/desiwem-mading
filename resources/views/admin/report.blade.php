@@ -297,15 +297,21 @@
   </div>
 </div>
 
+@php
+$exportArticles = $articles->map(function($a, $i) {
+    return [
+        'no' => $i + 1,
+        'title' => $a->title,
+        'category' => $a->category->name ?? 'Umum',
+        'author' => $a->author->name ?? 'Admin',
+        'date' => $a->created_at->format('d/m/Y H:i')
+    ];
+})->values();
+@endphp
+
 <script>
 let selectedCategory = 'ALL';
-const reportArticlesData = @json($articles->map(fn($a, $i) => [
-    'no' => $i + 1,
-    'title' => $a->title,
-    'category' => $a->category->name ?? 'Umum',
-    'author' => $a->author->name ?? 'Admin',
-    'date' => $a->created_at->format('d/m/Y H:i')
-]));
+const reportArticlesData = @json($exportArticles);
 
 function filterByCategory(categoryName, btnElement) {
   selectedCategory = categoryName;
