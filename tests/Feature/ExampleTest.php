@@ -70,6 +70,7 @@ class ExampleTest extends TestCase
         $this->get('/admin/articles/' . $article->id . '/edit')->assertRedirect('/login');
 
         // Authenticated admin access
+        /** @var \App\Models\User $user */
         $this->actingAs($user);
 
         $createResponse = $this->get('/admin/articles/create');
@@ -84,6 +85,7 @@ class ExampleTest extends TestCase
 
     public function test_admin_dashboard_renders_charts_successfully(): void
     {
+        /** @var \App\Models\User $user */
         $user = \App\Models\User::factory()->create(['username' => 'admin_chart']);
         $this->actingAs($user);
 
