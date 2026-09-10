@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Pusat Kendali Admin - GUNDAR Mading')
+@section('title', 'Pusat Kendali Admin - DeSiWeM')
 
 @section('content')
 <!-- Hero Welcome & Operational Actions -->

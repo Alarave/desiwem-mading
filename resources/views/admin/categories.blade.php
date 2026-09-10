@@ -8,7 +8,7 @@
     <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
         <div>
             <h5 class="fw-bold mb-1 text-slate-900">Daftar Kategori Mading</h5>
-            <small class="text-muted">Kelola pengelompokan tulisan mading kampus Sekolah Tinggi GUNDAR.</small>
+            <small class="text-muted">Kelola pengelompokan tulisan mading portal DeSiWeM.</small>
         </div>
         <button type="button" class="btn btn-primary-custom px-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
             <i class="bi bi-plus-lg me-1"></i> Tambah Kategori Baru

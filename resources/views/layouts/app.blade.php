@@ -8,10 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Title & SEO Description -->
-    <title>@yield('title', 'Mading ASESOR — Sekolah Tinggi GUNDAR')</title>
-    <meta name="description" content="@yield('meta_description', 'Portal majalah dinding digital resmi Sekolah Tinggi GUNDAR. Menyajikan artikel ilmiah, karya literasi, agenda, dan inovasi civitas akademika.')">
-    <meta name="keywords" content="@yield('meta_keywords', 'mading asesor, majalah dinding digital, sekolah tinggi gundar, karya mahasiswa, artikel ilmiah, berita kampus')">
-    <meta name="author" content="@yield('meta_author', 'Sekolah Tinggi GUNDAR')">
+    <title>@yield('title', 'DeSiWeM — Digital School Information & Wall Magazine')</title>
+    <meta name="description" content="@yield('meta_description', 'Portal majalah dinding digital resmi DeSiWeM. Menyajikan artikel ilmiah, karya literasi, agenda, dan inovasi civitas akademika.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'desiwem, mading digital, majalah dinding digital, karya mahasiswa, artikel ilmiah, berita kampus')">
+    <meta name="author" content="@yield('meta_author', 'DeSiWeM')">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="@yield('canonical_url', url()->current())">
@@ -26,23 +26,23 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('canonical_url', url()->current())">
-    <meta property="og:title" content="@yield('title', 'Mading ASESOR — Sekolah Tinggi GUNDAR')">
-    <meta property="og:description" content="@yield('meta_description', 'Portal majalah dinding digital resmi Sekolah Tinggi GUNDAR. Menyajikan artikel ilmiah, karya literasi, agenda, dan inovasi civitas akademika.')">
+    <meta property="og:title" content="@yield('title', 'DeSiWeM — Digital School Information & Wall Magazine')">
+    <meta property="og:description" content="@yield('meta_description', 'Portal majalah dinding digital resmi DeSiWeM. Menyajikan artikel ilmiah, karya literasi, agenda, dan inovasi civitas akademika.')">
     <meta property="og:image" content="@yield('og_image', asset('images/og-banner.jpg'))">
-    <meta property="og:image:alt" content="@yield('title', 'Mading ASESOR — Sekolah Tinggi GUNDAR')">
+    <meta property="og:image:alt" content="@yield('title', 'DeSiWeM — Digital School Information & Wall Magazine')">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="id_ID">
-    <meta property="og:site_name" content="Mading ASESOR Sekolah Tinggi GUNDAR">
+    <meta property="og:site_name" content="DeSiWeM Portal Mading Digital">
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('canonical_url', url()->current())">
-    <meta name="twitter:title" content="@yield('title', 'Mading ASESOR — Sekolah Tinggi GUNDAR')">
-    <meta name="twitter:description" content="@yield('meta_description', 'Portal majalah dinding digital resmi Sekolah Tinggi GUNDAR. Menyajikan artikel ilmiah, karya literasi, agenda, dan inovasi civitas akademika.')">
+    <meta name="twitter:title" content="@yield('title', 'DeSiWeM — Digital School Information & Wall Magazine')">
+    <meta name="twitter:description" content="@yield('meta_description', 'Portal majalah dinding digital resmi DeSiWeM. Menyajikan artikel ilmiah, karya literasi, agenda, dan inovasi civitas akademika.')">
     <meta name="twitter:image" content="@yield('og_image', asset('images/og-banner.jpg'))">
-    <meta name="twitter:site" content="@stgundar">
-    <meta name="twitter:creator" content="@stgundar">
+    <meta name="twitter:site" content="@desiwem">
+    <meta name="twitter:creator" content="@desiwem">
 
     <!-- Google Fonts & Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -195,7 +195,7 @@
                         <a href="{{ route('login') }}" class="carbon-footer-link">Admin Portal</a>
                     </div>
                     <span class="text-muted small d-none d-sm-inline">·</span>
-                    <span class="text-muted small">&copy; {{ date('Y') }} ASESOR Kampus GUNDAR. All Rights Reserved.</span>
+                    <span class="text-muted small">&copy; {{ date('Y') }} DeSiWeM. All Rights Reserved.</span>
                 </div>
             </div>
         </div>

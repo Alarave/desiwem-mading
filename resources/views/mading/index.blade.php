@@ -14,7 +14,7 @@
                 @if(isset($activeCategory))
                     Artikel dan publikasi dalam kategori <span class="carbon-tag-highlight">{{ strtolower($activeCategory->name) }}</span>.
                 @else
-                    Temukan kabar terkini, wawasan akademik, inovasi riset, dan karya ekspresi mahasiswa Sekolah Tinggi GUNDAR.
+                    Temukan kabar terkini, wawasan akademik, inovasi riset, dan karya ekspresi di portal DeSiWeM.
                 @endif
             </p>
         </div>
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const titleEl = document.getElementById('carbonGalleryTitle');
     const descEl = document.getElementById('carbonGalleryDesc');
     const defaultTitle = 'Articles';
-    const defaultDesc = 'Temukan kabar terkini, wawasan akademik, inovasi riset, dan karya ekspresi mahasiswa Sekolah Tinggi GUNDAR.';
+    const defaultDesc = 'Temukan kabar terkini, wawasan akademik, inovasi riset, dan karya ekspresi di portal DeSiWeM.';
 
     function setActiveCategory(catId, catName, catSlug) {
         currentCategory = String(catId);

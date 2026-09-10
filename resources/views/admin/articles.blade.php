@@ -8,7 +8,7 @@
     <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
         <div>
             <h5 class="fw-bold mb-1 text-slate-900">Daftar Publikasi Artikel</h5>
-            <small class="text-muted">Kelola seluruh pengumuman & artikel mading kampus Sekolah Tinggi GUNDAR.</small>
+            <small class="text-muted">Kelola seluruh pengumuman & artikel mading portal DeSiWeM.</small>
         </div>
         <a href="{{ route('articles.create') }}" class="btn btn-primary-custom px-4 fw-bold shadow d-inline-flex align-items-center gap-1.5">
             <i class="bi bi-plus-lg"></i> Buat Artikel Baru
