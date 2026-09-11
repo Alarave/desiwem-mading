@@ -1988,51 +1988,7 @@ tr:hover td {
   border: 0;
 }
 
-/* Printable Report Design Rules */
-@media print {
-  body {
-    background: #fff !important;
-    color: #000 !important;
-    font-size: 11pt;
-  }
-  
-  header, .admin-sidebar, .btn-action, .btn-add, .controls-bar, .site-footer {
-    display: none !important;
-  }
-  
-  .admin-layout {
-    grid-template-columns: 1fr !important;
-  }
-  
-  .container {
-    padding: 0 !important;
-    max-width: 100% !important;
-  }
-  
-  .table-card {
-    border: none !important;
-    background: none !important;
-  }
-  
-  table {
-    border: 1px solid #ddd !important;
-  }
-  
-  th, td {
-    border: 1px solid #ddd !important;
-    color: #000 !important;
-    padding: 8px !important;
-  }
-  
-  th {
-    background-color: #f2f2f2 !important;
-  }
-  
-  .admin-title {
-    color: #000 !important;
-    font-size: 20pt !important;
-  }
-}
+
 
 /* ==========================================================================
    Executive Report & Analytics Styles (Agency-Grade UI & Anti-Slop)
@@ -2500,81 +2456,201 @@ tr:hover td {
 
 /* Print Overrides */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-    font-size: 9pt !important;
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
   }
 
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #09090b !important;
+    font-size: 9pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  /* Sembunyikan navigasi, sidebar, mobile topbar, drawer, toolbar cetak */
   header,
   .admin-sidebar,
+  .acet-desktop-sidebar,
+  .acet-mobile-topbar,
+  .acet-mobile-drawer,
   .report-control-bar,
   .report-filter-bar,
-  .no-print {
+  .no-print,
+  .d-lg-none {
     display: none !important;
   }
 
-  main.container {
-    max-width: 100% !important;
+  /* Reset container layout admin shell */
+  .acet-admin-shell {
+    display: block !important;
+    min-height: 0 !important;
+    background: #ffffff !important;
+  }
+
+  .acet-main-content {
+    display: block !important;
     padding: 0 !important;
     margin: 0 !important;
+    background: #ffffff !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
-  .admin-layout {
-    display: block !important;
-  }
-
-  .admin-main {
+  .acet-content-body {
     padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   .report-sheet {
     border: none !important;
     padding: 0 !important;
+    margin: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
+    max-width: 100% !important;
+    background: #ffffff !important;
   }
 
+  /* Bento Grid - Tetap berwarna dan memiliki garis batas rapi */
   .report-bento-grid {
+    display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 0 !important;
-    border: 1px solid #000 !important;
-    background: transparent !important;
+    gap: 8px !important;
+    margin-bottom: 1rem !important;
   }
 
   .report-bento-card {
-    border: 1px solid #000 !important;
-    background: #fff !important;
-    padding: 0.65rem !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    border-radius: 6px !important;
+    padding: 0.65rem 0.75rem !important;
   }
 
+  .bento-label {
+    color: #475569 !important;
+    font-size: 0.75rem !important;
+  }
+
+  .bento-val {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+  }
+
+  .bento-sub {
+    color: #64748b !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* Kotak Meteran Distribusi Kategori (Visual Bar Terisi) */
+  .report-dist-box {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    padding: 0.85rem 1rem !important;
+    margin-bottom: 1.25rem !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .report-dist-item {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .report-bar-wrap {
+    height: 7px !important;
+    background: #e2e8f0 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 9999px !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  .report-bar-fill {
+    height: 100% !important;
+    background: #0f172a !important;
+    border-radius: 9999px !important;
+    display: block !important;
+  }
+
+  /* Badges */
+  .report-badge-mono {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    font-size: 0.68rem !important;
+  }
+
+  /* Tabel Laporan */
   .report-table-wrap {
-    border: 1px solid #000 !important;
-    border-radius: 0 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
   }
 
   .report-table {
-    border: none !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
   }
 
-  .report-table th, 
+  .report-table thead {
+    display: table-header-group !important;
+  }
+
+  .report-table th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid #cbd5e1 !important;
+    padding: 6px 8px !important;
+    font-size: 8pt !important;
+  }
+
   .report-table td {
-    border: 1px solid #000 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
     padding: 5px 8px !important;
+    color: #1e293b !important;
+    font-size: 8pt !important;
+  }
+
+  .report-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   .report-kop {
-    border-bottom: 2px solid #000 !important;
+    border-bottom: 2px solid #0f172a !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .report-kop-logo {
-    background: #000 !important;
-    border-radius: 0 !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+  }
+
+  .report-banner {
+    border: 1px solid #cbd5e1 !important;
+    background: #f1f5f9 !important;
+    padding: 0.65rem 0.85rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .print-avoid-break {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 }
 
@@ -2593,122 +2669,6 @@ tr:hover td {
   }
 }
 
-/* ==========================================================================
-   Vercel Tabs Component (Sliding Hover Pill + Bottom Active Indicator)
-   ========================================================================== */
-.vercel-tabs-nav {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  max-width: 100%;
-}
 
-.vercel-tabs-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding: 4px 0;
-}
-
-.vercel-tabs-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-/* Floating Hover Highlight */
-.vercel-tab-hover-pill {
-  position: absolute;
-  height: 28px;
-  background: rgba(15, 23, 42, 0.06);
-  border-radius: 6px;
-  pointer-events: none;
-  opacity: 0;
-  transition: left var(--duration-default) var(--ease-out),
-              width var(--duration-default) var(--ease-out),
-              opacity var(--duration-default) var(--ease-out);
-  z-index: 1;
-}
-
-/* Bottom Active Line Indicator */
-.vercel-tab-active-indicator {
-  position: absolute;
-  bottom: 0px;
-  height: 2px;
-  background: #0f172a;
-  border-radius: 9999px;
-  pointer-events: none;
-  transition: left var(--duration-default) var(--ease-out),
-              width var(--duration-default) var(--ease-out),
-              opacity var(--duration-default) var(--ease-out);
-  z-index: 2;
-}
-
-/* Individual Tab Item / Link */
-a.vercel-tab-link,
-.vercel-tab-link {
-  position: relative;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4rem 0.95rem;
-  height: 32px;
-  font-size: 0.865rem;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  color: #64748b !important;
-  text-decoration: none !important;
-  border-radius: 6px;
-  transition: var(--transition-colors);
-  white-space: nowrap;
-  user-select: none;
-  cursor: pointer;
-  background: transparent !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  line-height: 1;
-}
-
-a.vercel-tab-link:visited,
-.vercel-tab-link:visited {
-  color: #64748b !important;
-  text-decoration: none !important;
-}
-
-a.vercel-tab-link:hover,
-a.vercel-tab-link:focus,
-.vercel-tab-link:hover,
-.vercel-tab-link:focus {
-  color: #09090b !important;
-  text-decoration: none !important;
-}
-
-a.vercel-tab-link.active,
-.vercel-tab-link.active {
-  color: #09090b !important;
-  font-weight: 600;
-  text-decoration: none !important;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .dark .vercel-tab-hover-pill {
-    background: rgba(255, 255, 255, 0.12);
-  }
-  .dark .vercel-tab-active-indicator {
-    background: #ffffff;
-  }
-  .dark .vercel-tab-link {
-    color: rgba(255, 255, 255, 0.6) !important;
-  }
-  .dark .vercel-tab-link:hover,
-  .dark .vercel-tab-link.active {
-    color: #ffffff !important;
-  }
-}
 
 

@@ -12,8 +12,10 @@ Route::get('/tag/{tag}', [ArticleController::class, 'publicIndex'])->name('madin
 Route::get('/articles/{article}', [ArticleController::class, 'publicShow'])->name('mading.show');
 
 // Authentication Routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login');
+});
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin Protected Routes

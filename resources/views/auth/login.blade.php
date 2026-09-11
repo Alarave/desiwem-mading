@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Sign in - Mading ASESOR')
+@section('title', 'Sign In — DeSiWeM')
 
 @section('styles')
 <style>
-  .shadcn-wrapper {
+  .auth-wrapper {
     min-height: calc(85vh - 80px);
     display: flex;
     align-items: center;
@@ -12,9 +12,9 @@
     padding: 1.5rem;
   }
 
-  .shadcn-card {
+  .auth-card {
     width: 100%;
-    max-width: 24rem; /* max-w-sm */
+    max-width: 24rem;
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 0.75rem;
@@ -22,7 +22,7 @@
     overflow: hidden;
   }
 
-  .shadcn-card-header {
+  .auth-card-header {
     display: flex;
     flex-direction: column;
     gap: 0.375rem;
@@ -30,7 +30,7 @@
     text-align: center;
   }
 
-  .shadcn-card-title {
+  .auth-card-title {
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: -0.025em;
@@ -39,68 +39,114 @@
     margin: 0;
   }
 
-  .shadcn-card-desc {
+  .auth-card-desc {
     font-size: 0.875rem;
     color: #64748b;
     margin: 0;
   }
 
-  .shadcn-card-content {
-    padding: 1rem 1.5rem;
+  .auth-card-content {
+    padding: 1rem 1.5rem 1.5rem;
   }
 
-  .shadcn-field-group {
+  .auth-field-group {
     display: flex;
     flex-direction: column;
     gap: 1.15rem;
   }
 
-  .shadcn-field {
+  .auth-field {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
   }
 
-  .shadcn-field-label {
+  .auth-field-label {
     font-size: 0.875rem;
     font-weight: 500;
     color: #0f172a;
     margin: 0;
   }
 
-  .shadcn-input {
+  .auth-input {
     display: flex;
     height: 2.35rem;
     width: 100%;
     border-radius: 0.375rem;
     border: 1px solid #cbd5e1;
-    background-color: transparent;
+    background-color: #ffffff;
     padding: 0.35rem 0.75rem;
     font-size: 0.875rem;
     color: #0f172a;
     transition: all 0.15s ease-in-out;
   }
 
-  .shadcn-input:focus {
+  .auth-input:focus {
     outline: none;
     border-color: #0f172a;
     box-shadow: 0 0 0 1px #0f172a;
   }
 
-  .shadcn-field-desc {
-    font-size: 0.8rem;
-    color: #64748b;
-    margin-top: 0.15rem;
+  .auth-password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
   }
 
-  .shadcn-card-footer {
+  .auth-password-wrapper .auth-input {
+    padding-right: 2.5rem;
+  }
+
+  .auth-password-toggle {
+    position: absolute;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: #64748b;
+    padding: 0.25rem 0.4rem;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+  }
+
+  .auth-password-toggle:hover {
+    color: #0f172a;
+  }
+
+  .auth-checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: -0.25rem;
+  }
+
+  .auth-checkbox {
+    width: 1rem;
+    height: 1rem;
+    accent-color: #0f172a;
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .auth-checkbox-label {
+    font-size: 0.8125rem;
+    color: #475569;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .auth-actions {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.5rem 1.5rem 1.5rem;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
   }
 
-  .shadcn-btn-primary {
+  .auth-btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -117,12 +163,17 @@
     text-decoration: none;
   }
 
-  .shadcn-btn-primary:hover {
+  .auth-btn-primary:hover:not(:disabled) {
     background-color: #1e293b;
     color: #ffffff;
   }
 
-  .shadcn-btn-outline {
+  .auth-btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .auth-btn-outline {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -139,88 +190,116 @@
     text-decoration: none;
   }
 
-  .shadcn-btn-outline:hover {
+  .auth-btn-outline:hover {
     background-color: #f8fafc;
     color: #0f172a;
-  }
-
-  .shadcn-btn-link {
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 0.825rem;
-    color: #64748b;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .shadcn-btn-link:hover {
-    color: #0f172a;
-    text-decoration: underline;
   }
 </style>
 @endsection
 
 @section('content')
-<div class="shadcn-wrapper">
-  <!-- Card06 Adaptation -->
-  <div class="shadcn-card">
-    <div class="shadcn-card-header">
-      <h2 class="shadcn-card-title">Sign in</h2>
-      <p class="shadcn-card-desc">Enter your credentials to access your account.</p>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-card-header">
+      <h2 class="auth-card-title">Sign In</h2>
+      <p class="auth-card-desc">Masuk untuk mengelola publikasi mading DeSiWeM.</p>
     </div>
 
-    <div class="shadcn-card-content">
+    <div class="auth-card-content">
       @if($errors->any())
         <div class="alert alert-danger py-2 px-3 mb-3 border-0 rounded-2" style="font-size: 0.825rem; background-color: #fef2f2; color: #991b1b;">
           <i class="bi bi-exclamation-circle me-1"></i> {{ $errors->first() }}
         </div>
       @endif
 
-      <form action="{{ route('login') }}" method="POST" id="login-form">
+      <form action="{{ route('login') }}" method="POST" id="auth-login-form">
         @csrf
-        <div class="shadcn-field-group">
-          <!-- Username / Email Field -->
-          <div class="shadcn-field">
-            <label class="shadcn-field-label" for="card-06-username">Username</label>
+        <div class="auth-field-group">
+          <!-- Username -->
+          <div class="auth-field">
+            <label class="auth-field-label" for="login-username">Username</label>
             <input 
-              id="card-06-username"
+              id="login-username"
               name="username"
               type="text" 
-              class="shadcn-input" 
-              placeholder="admin"
+              class="auth-input" 
+              placeholder="Masukkan username"
               value="{{ old('username') }}" 
+              autocomplete="username"
               required 
               autofocus 
             />
           </div>
 
-          <!-- Password Field -->
-          <div class="shadcn-field">
-            <label class="shadcn-field-label" for="card-06-password">Password</label>
-            <input 
-              id="card-06-password"
-              name="password" 
-              type="password" 
-              class="shadcn-input" 
-              required 
-            />
-            <div class="shadcn-field-desc">
-              Must be at least 8 characters.
+          <!-- Password -->
+          <div class="auth-field">
+            <label class="auth-field-label" for="login-password">Password</label>
+            <div class="auth-password-wrapper">
+              <input 
+                id="login-password"
+                name="password" 
+                type="password" 
+                class="auth-input" 
+                placeholder="Masukkan password"
+                autocomplete="current-password"
+                required 
+              />
+              <button type="button" class="auth-password-toggle" id="authPasswordToggle" aria-label="Lihat kata sandi">
+                <i class="bi bi-eye" id="authPasswordEyeIcon"></i>
+              </button>
             </div>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="auth-checkbox-group">
+            <input type="checkbox" name="remember" id="login-remember" class="auth-checkbox" value="1" {{ old('remember') ? 'checked' : '' }}>
+            <label for="login-remember" class="auth-checkbox-label">Ingat saya pada perangkat ini</label>
+          </div>
+
+          <!-- Submit & Actions -->
+          <div class="auth-actions">
+            <button type="submit" class="auth-btn-primary" id="authSubmitBtn">
+              <span id="authSubmitText">Sign In</span>
+            </button>
+            <a href="{{ route('mading.index') }}" class="auth-btn-outline">
+              <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
+            </a>
           </div>
         </div>
       </form>
     </div>
-
-    <div class="shadcn-card-footer">
-      <button type="submit" form="login-form" class="shadcn-btn-primary">
-        Sign in
-      </button>
-      <a href="{{ route('mading.index') }}" class="shadcn-btn-outline">
-        <i class="bi bi-arrow-left me-1"></i> Kembali ke Beranda
-      </a>
-    </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+  (function () {
+    // Password visibility toggle
+    const toggleBtn = document.getElementById('authPasswordToggle');
+    const pwdInput = document.getElementById('login-password');
+    const eyeIcon = document.getElementById('authPasswordEyeIcon');
+
+    if (toggleBtn && pwdInput && eyeIcon) {
+      toggleBtn.addEventListener('click', function () {
+        const isPassword = pwdInput.getAttribute('type') === 'password';
+        pwdInput.setAttribute('type', isPassword ? 'text' : 'password');
+        eyeIcon.classList.toggle('bi-eye', !isPassword);
+        eyeIcon.classList.toggle('bi-eye-slash', isPassword);
+      });
+    }
+
+    // Double submit protection
+    const form = document.getElementById('auth-login-form');
+    const submitBtn = document.getElementById('authSubmitBtn');
+    const submitText = document.getElementById('authSubmitText');
+
+    if (form && submitBtn && submitText) {
+      form.addEventListener('submit', function () {
+        submitBtn.disabled = true;
+        submitText.textContent = 'Memproses...';
+      });
+    }
+  })();
+</script>
 @endsection

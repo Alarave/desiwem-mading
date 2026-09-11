@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Master Stylesheets -->
-    <link rel="stylesheet" href="{{ asset('css/Public.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('styles')
     @yield('meta')
@@ -202,7 +202,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/vercel-tabs.js') }}"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const toggleBtn = document.getElementById('mobileNavToggle');

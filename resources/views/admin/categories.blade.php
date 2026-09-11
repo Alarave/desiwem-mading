@@ -5,51 +5,63 @@
 
 @section('content')
 <div class="card card-custom p-4">
-    <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-3">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 border-bottom pb-3">
         <div>
-            <h5 class="fw-bold mb-1 text-slate-900">Daftar Kategori Mading</h5>
-            <small class="text-muted">Kelola pengelompokan tulisan mading portal DeSiWeM.</small>
+            <h5 class="fw-bold mb-1 text-dark">Daftar Kategori Mading</h5>
+            <p class="text-secondary small mb-0">Kelola pengelompokan tulisan dan tag mading portal DeSiWeM.</p>
         </div>
-        <button type="button" class="btn btn-primary-custom px-4 fw-bold shadow" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
-            <i class="bi bi-plus-lg me-1"></i> Tambah Kategori Baru
+        <button type="button" class="btn btn-primary-custom px-4 fw-bold shadow-sm d-inline-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#createCategoryModal">
+            <i class="bi bi-plus-lg"></i> Tambah Kategori Baru
         </button>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-custom align-middle">
+        <table class="table table-custom table-hover align-middle mb-0">
             <thead>
                 <tr>
-                    <th style="width: 70px;">ID</th>
+                    <th style="width: 60px;" class="text-center">ID</th>
                     <th>Nama Kategori</th>
                     <th>Deskripsi Singkat</th>
                     <th>Jumlah Artikel</th>
-                    <th style="width: 150px;" class="text-center">Aksi</th>
+                    <th style="width: 140px;" class="text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($categories as $category)
                     <tr>
-                        <td><span class="badge bg-slate-200 text-slate-700 font-bold" style="background: #e2e8f0; color: #334155;">#{{ $category->id }}</span></td>
-                        <td class="fw-bold text-slate-800 fs-6">{{ $category->name }}</td>
-                        <td class="text-muted small">{{ $category->description ?: '-' }}</td>
+                        <td class="text-center">
+                            <span class="badge text-bg-light border text-secondary font-monospace small">#{{ $category->id }}</span>
+                        </td>
                         <td>
-                            <span class="badge bg-info bg-opacity-10 text-info px-3 py-1.5 rounded-pill fw-bold">
-                                <i class="bi bi-file-earmark-text me-1"></i> {{ $category->articles_count }} Artikel
+                            <div class="fw-semibold text-dark mb-0.5">{{ $category->name }}</div>
+                            <span class="text-muted small font-monospace">/tag/{{ \Illuminate\Support\Str::slug($category->name) }}</span>
+                        </td>
+                        <td>
+                            <span class="text-secondary small">{{ $category->description ?: 'Tidak ada deskripsi' }}</span>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border px-2.5 py-1.5 rounded-pill fw-medium">
+                                <i class="bi bi-journal-text text-muted me-1"></i> {{ $category->articles_count }} Artikel
                             </span>
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-sm btn-outline-warning rounded-circle me-1" 
-                                    data-bs-toggle="modal" data-bs-target="#editCategoryModal{{ $category->id }}"
-                                    title="Edit Kategori">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle" title="Hapus Kategori">
-                                    <i class="bi bi-trash-fill"></i>
+                            <div class="d-inline-flex gap-1">
+                                <a href="{{ route('mading.tag', \Illuminate\Support\Str::slug($category->name)) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-2" title="Lihat di Beranda">
+                                    <i class="bi bi-box-arrow-up-right"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-primary rounded-2" 
+                                        data-bs-toggle="modal" data-bs-target="#editCategoryModal{{ $category->id }}"
+                                        title="Edit Kategori">
+                                    <i class="bi bi-pencil"></i>
                                 </button>
-                            </form>
+                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="Hapus Kategori">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
 
@@ -66,11 +78,11 @@
                                     </div>
                                     <div class="modal-body p-4">
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold text-slate-700 small text-uppercase">Nama Kategori</label>
-                                            <input type="text" name="name" class="form-control py-2.5" value="{{ old('name', $category->name) }}" required>
+                                            <label class="form-label fw-bold text-dark small text-uppercase">Nama Kategori</label>
+                                            <input type="text" name="name" class="form-control py-2" value="{{ old('name', $category->name) }}" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold text-slate-700 small text-uppercase">Deskripsi</label>
+                                            <label class="form-label fw-bold text-dark small text-uppercase">Deskripsi</label>
                                             <textarea name="description" class="form-control" rows="3">{{ old('description', $category->description) }}</textarea>
                                         </div>
                                     </div>
@@ -84,7 +96,10 @@
                     </div>
                 @empty
                     <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">Belum ada kategori yang ditambahkan.</td>
+                        <td colspan="5" class="text-center py-5 text-secondary">
+                            <i class="bi bi-inbox fs-2 d-block mb-2 text-muted"></i>
+                            Belum ada kategori yang ditambahkan.
+                        </td>
                     </tr>
                 @endforelse
             </tbody>
@@ -104,11 +119,11 @@
                 </div>
                 <div class="modal-body p-4">
                     <div class="mb-3">
-                        <label class="form-label fw-bold text-slate-700 small text-uppercase">Nama Kategori</label>
-                        <input type="text" name="name" class="form-control py-2.5" placeholder="Contoh: Pengumuman, Seni, Ilmiah" required>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Nama Kategori</label>
+                        <input type="text" name="name" class="form-control py-2" placeholder="Contoh: Pengumuman, Seni, Ilmiah" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-bold text-slate-700 small text-uppercase">Deskripsi Singkat</label>
+                        <label class="form-label fw-bold text-dark small text-uppercase">Deskripsi Singkat</label>
                         <textarea name="description" class="form-control" rows="3" placeholder="Jelaskan mengenai jenis artikel dalam kategori ini..."></textarea>
                     </div>
                 </div>

@@ -54,14 +54,6 @@ class DashboardController extends Controller
         ));
     }
 
-    public function summary()
-    {
-        return response()->json([
-            'categories' => Category::count(),
-            'articles' => Article::count(),
-            'users' => User::count(),
-        ]);
-    }
 
     public function reportView()
     {
@@ -84,26 +76,4 @@ class DashboardController extends Controller
         ));
     }
 
-    public function reportData()
-    {
-        $categories = Category::withCount('articles')->get();
-        $articles = Article::with(['category', 'author'])->latest()->get();
-        $topCategory = $categories->sortByDesc('articles_count')->first();
-        $topAuthor = User::withCount('articles')->orderByDesc('articles_count')->first();
-
-        return response()->json([
-            'categories' => $categories,
-            'articles' => $articles,
-            'summary' => [
-                'total_categories' => Category::count(),
-                'total_articles' => Article::count(),
-                'total_users' => User::count(),
-                'articles_this_month' => Article::whereMonth('created_at', now()->month)
-                    ->whereYear('created_at', now()->year)
-                    ->count(),
-                'top_category' => $topCategory ? $topCategory->name : null,
-                'top_author' => $topAuthor ? $topAuthor->name : null,
-            ]
-        ]);
-    }
 }

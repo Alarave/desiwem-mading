@@ -50,8 +50,26 @@ class ExampleTest extends TestCase
 
         $response = $this->get('/tag/wallpapers');
         $response->assertStatus(200);
-        $response->assertSee('#wallpapers');
+        $response->assertSee('Wallpapers');
         $response->assertSee('Minimalist Architecture Wallpapers');
+    }
+
+    public function test_tag_category_page_with_multiword_slug_returns_successful_response(): void
+    {
+        $category = \App\Models\Category::create(['name' => 'Info Sekolah']);
+        $user = \App\Models\User::factory()->create(['username' => 'testuser3']);
+        \App\Models\Article::create([
+            'category_id' => $category->id,
+            'created_by' => $user->id,
+            'title' => 'Pengumuman Ujian Semester',
+            'content' => 'Jadwal dan tata tertib ujian semester genap.',
+            'image_url' => 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1400',
+        ]);
+
+        $response = $this->get('/tag/info-sekolah');
+        $response->assertStatus(200);
+        $response->assertSee('Info Sekolah');
+        $response->assertSee('Pengumuman Ujian Semester');
     }
 
     public function test_admin_can_access_article_create_and_edit_pages(): void
@@ -95,5 +113,44 @@ class ExampleTest extends TestCase
         $response->assertSee('Proporsi Kategori');
         $response->assertSee('monthlyTrendChart');
         $response->assertSee('categoryDistributionChart');
+    }
+
+    public function test_user_can_login_with_valid_credentials_and_remember(): void
+    {
+        \App\Models\User::factory()->create([
+            'username' => 'petugas_mading',
+            'password' => bcrypt('secret12345'),
+        ]);
+
+        $response = $this->post('/login', [
+            'username' => 'petugas_mading',
+            'password' => 'secret12345',
+            'remember' => '1',
+        ]);
+
+        $response->assertRedirect('/admin/dashboard');
+        $this->assertAuthenticated();
+    }
+
+    public function test_user_cannot_login_with_invalid_credentials(): void
+    {
+        $response = $this->post('/login', [
+            'username' => 'unknown_user',
+            'password' => 'wrongpass',
+        ]);
+        $response->assertSessionHasErrors('username');
+        $this->assertGuest();
+    }
+
+    public function test_category_filter_pills_render_as_navigable_links(): void
+    {
+        $cat1 = \App\Models\Category::create(['name' => 'Akademik']);
+        $cat2 = \App\Models\Category::create(['name' => 'Ekstrakurikuler']);
+
+        $response = $this->get('/tag/akademik');
+        $response->assertStatus(200);
+        $response->assertSee(route('mading.index'));
+        $response->assertSee(route('mading.tag', 'ekstrakurikuler'));
+        $response->assertSee('carbon-tag-btn active', false);
     }
 }

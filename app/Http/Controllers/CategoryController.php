@@ -13,11 +13,6 @@ class CategoryController extends Controller
         return view('admin.categories', compact('categories'));
     }
 
-    public function index()
-    {
-        $categories = Category::withCount('articles')->latest()->get();
-        return response()->json($categories);
-    }
 
     public function store(Request $request)
     {

@@ -13,16 +13,20 @@ class ArticleController extends Controller
     {
         $query = Article::with(['category', 'author'])->latest();
 
+        $categories = Category::all();
+
         $activeCategory = null;
         if ($tag) {
-            $activeCategory = Category::where('name', $tag)
-                ->orWhereRaw('LOWER(name) = ?', [strtolower($tag)])
-                ->first();
+            $activeCategory = $categories->first(function ($c) use ($tag) {
+                return $c->name === $tag
+                    || strtolower($c->name) === strtolower($tag)
+                    || \Illuminate\Support\Str::slug($c->name) === \Illuminate\Support\Str::slug($tag);
+            });
             if (!$activeCategory && is_numeric($tag)) {
-                $activeCategory = Category::find($tag);
+                $activeCategory = $categories->find($tag);
             }
         } elseif ($request->filled('category_id')) {
-            $activeCategory = Category::find($request->category_id);
+            $activeCategory = $categories->find($request->category_id);
         }
 
         if ($activeCategory) {
@@ -38,7 +42,6 @@ class ArticleController extends Controller
         }
 
         $articles = $query->get();
-        $categories = Category::all();
 
         return view('mading.index', compact('articles', 'categories', 'activeCategory'));
     }
@@ -74,29 +77,6 @@ class ArticleController extends Controller
         return view('admin.articles.edit', compact('article', 'categories'));
     }
 
-    public function index(Request $request)
-    {
-        $query = Article::with(['category', 'author'])->latest();
-
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('content', 'like', "%{$search}%");
-            });
-        }
-
-        return response()->json($query->get());
-    }
-
-    public function show(Article $article)
-    {
-        return response()->json($article->load(['category', 'author']));
-    }
 
     public function store(Request $request)
     {
@@ -104,10 +84,10 @@ class ArticleController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image_url' => 'nullable|string|max:500',
+            'image_url' => 'nullable|url|max:500',
         ]);
 
-        $validated['created_by'] = Auth::id() ?? 1;
+        $validated['created_by'] = Auth::id();
 
         $article = Article::create($validated);
 
@@ -127,7 +107,7 @@ class ArticleController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image_url' => 'nullable|string|max:500',
+            'image_url' => 'nullable|url|max:500',
         ]);
 
         $article->update($validated);

@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
-@section('title', (isset($activeCategory) ? '#' . strtolower($activeCategory->name) . ' — ' : '') . 'Articles — ASESOR')
+@section('title', (isset($activeCategory) ? $activeCategory->name . ' — ' : '') . 'Artikel — DeSiWeM')
 
 @section('content')
 <div class="carbon-container">
-    <!-- Header Section: Articles or #tagname -->
+    <!-- Header Section: Articles or Category Name -->
     <div class="carbon-header-block" id="articles-section">
         <div style="max-width: 38rem;">
             <h1 class="carbon-heading-articles" id="carbonGalleryTitle">
-                {{ isset($activeCategory) ? '#' . strtolower($activeCategory->name) : 'Articles' }}
+                {{ isset($activeCategory) ? $activeCategory->name : 'Semua Artikel' }}
             </h1>
             <p class="carbon-heading-desc" id="carbonGalleryDesc">
                 @if(isset($activeCategory))
-                    Artikel dan publikasi dalam kategori <span class="carbon-tag-highlight">{{ strtolower($activeCategory->name) }}</span>.
+                    Artikel dan publikasi dalam kategori <span class="carbon-tag-highlight">{{ $activeCategory->name }}</span>.
                 @else
                     Temukan kabar terkini, wawasan akademik, inovasi riset, dan karya ekspresi di portal DeSiWeM.
                 @endif
@@ -22,21 +22,15 @@
         <!-- Tag Filter Pills (Horizontal Scroll) & Instant Search -->
         <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mt-4">
             <div class="carbon-tags-scroll" id="tagFilterPills">
-                <button type="button" 
-                        class="carbon-tag-btn {{ !isset($activeCategory) && !request('category_id') ? 'active' : '' }}" 
-                        data-filter="all"
-                        data-name="all"
-                        data-slug="">
-                    semua
-                </button>
+                <a href="{{ route('mading.index') }}" 
+                   class="carbon-tag-btn {{ !isset($activeCategory) && !request('category_id') ? 'active' : '' }}">
+                    Semua
+                </a>
                 @foreach($categories as $cat)
-                    <button type="button" 
-                            class="carbon-tag-btn {{ (isset($activeCategory) && $activeCategory->id == $cat->id) || request('category_id') == $cat->id ? 'active' : '' }}" 
-                            data-filter="{{ $cat->id }}"
-                            data-name="{{ strtolower($cat->name) }}"
-                            data-slug="{{ strtolower($cat->name) }}">
-                        {{ strtolower($cat->name) }}
-                    </button>
+                    <a href="{{ route('mading.tag', \Illuminate\Support\Str::slug($cat->name)) }}" 
+                       class="carbon-tag-btn {{ (isset($activeCategory) && $activeCategory->id == $cat->id) || request('category_id') == $cat->id ? 'active' : '' }}">
+                        {{ $cat->name }}
+                    </a>
                 @endforeach
             </div>
 
@@ -146,26 +140,18 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const pills = document.querySelectorAll('.carbon-tag-btn[data-filter]');
     const items = document.querySelectorAll('.article-gallery-item');
     const searchInput = document.getElementById('gallerySearchInput');
     const emptyState = document.getElementById('galleryLiveEmpty');
     const resetBtn = document.getElementById('btnResetGalleryFilter');
 
-    let currentCategory = "{{ request('category_id') ?: 'all' }}";
-    let currentSearch = (searchInput ? searchInput.value.toLowerCase().trim() : '');
-
-    function applyFilter() {
+    function applySearch() {
+        const query = (searchInput ? searchInput.value.toLowerCase().trim() : '');
         let visibleCount = 0;
 
         items.forEach(function(item) {
-            const itemCat = item.getAttribute('data-category');
             const itemText = item.getAttribute('data-search') || '';
-
-            const matchCat = (currentCategory === 'all' || itemCat === currentCategory);
-            const matchSearch = (!currentSearch || itemText.includes(currentSearch));
-
-            if (matchCat && matchSearch) {
+            if (!query || itemText.includes(query)) {
                 item.style.display = 'flex';
                 visibleCount++;
             } else {
@@ -182,66 +168,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    const titleEl = document.getElementById('carbonGalleryTitle');
-    const descEl = document.getElementById('carbonGalleryDesc');
-    const defaultTitle = 'Articles';
-    const defaultDesc = 'Temukan kabar terkini, wawasan akademik, inovasi riset, dan karya ekspresi di portal DeSiWeM.';
-
-    function setActiveCategory(catId, catName, catSlug) {
-        currentCategory = String(catId);
-        pills.forEach(function(pill) {
-            if (pill.getAttribute('data-filter') === currentCategory) {
-                pill.classList.add('active');
-            } else {
-                pill.classList.remove('active');
-            }
-        });
-
-        if (titleEl && descEl) {
-            if (currentCategory === 'all' || !catName || catName === 'all') {
-                titleEl.textContent = defaultTitle;
-                descEl.innerHTML = defaultDesc;
-                if (window.history && window.history.pushState) {
-                    window.history.pushState({}, '', '/');
-                }
-            } else {
-                titleEl.textContent = '#' + catName;
-                descEl.innerHTML = 'Artikel dan publikasi dalam kategori <span class="carbon-tag-highlight">' + catName + '</span>.';
-                if (window.history && window.history.pushState && catSlug) {
-                    window.history.pushState({}, '', '/tag/' + encodeURIComponent(catSlug));
-                }
-            }
-        }
-
-        applyFilter();
-    }
-
-    pills.forEach(function(pill) {
-        pill.addEventListener('click', function() {
-            const catId = this.getAttribute('data-filter');
-            const catName = this.getAttribute('data-name');
-            const catSlug = this.getAttribute('data-slug');
-            setActiveCategory(catId, catName, catSlug);
-        });
-    });
-
     if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            currentSearch = this.value.toLowerCase().trim();
-            applyFilter();
-        });
+        searchInput.addEventListener('input', applySearch);
     }
 
     if (resetBtn) {
         resetBtn.addEventListener('click', function() {
-            if (searchInput) searchInput.value = '';
-            currentSearch = '';
-            setActiveCategory('all', 'all', '');
+            window.location.href = "{{ route('mading.index') }}";
         });
-    }
-
-    if (currentCategory !== 'all' || currentSearch !== '') {
-        applyFilter();
     }
 });
 </script>

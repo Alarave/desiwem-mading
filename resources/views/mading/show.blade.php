@@ -41,7 +41,7 @@
             <!-- Article Prose Content -->
             <div class="mx-auto" style="max-width: 42rem;">
                 <article class="carbon-prose">
-                    {!! \Illuminate\Support\Str::markdown($article->content) !!}
+                    {!! \Illuminate\Support\Str::markdown($article->content, ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
                 </article>
             </div>
         </div>

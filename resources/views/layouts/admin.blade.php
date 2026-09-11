@@ -6,247 +6,272 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'Panel Admin — DeSiWeM')</title>
 
-  <!-- Google Fonts & Typography (Lexington Carbon Style) -->
+  <!-- Google Fonts & Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://rsms.me/">
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Bootstrap CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Master Stylesheets -->
-  <link rel="stylesheet" href="{{ asset('css/Public.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/public.css') }}">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/admin-sidebar.css') }}">
   @yield('styles')
 </head>
 <body>
 
-  <!-- Full-Screen Mobile Nav Overlay (Lexington Carbon) -->
-  <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true">
-    <div class="mobile-nav-header">
-      <a class="carbon-brand" href="{{ route('mading.index') }}">
-        <span class="carbon-brand-name">DeSiWeM</span>
-      </a>
-      <button type="button" class="carbon-hamburger-btn" id="mobileNavClose" aria-label="Tutup Menu">
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
+  <div class="acet-admin-shell">
+    
+    <!-- ====================================================================
+         DESKTOP EXPANDABLE SIDEBAR
+         Collapsed: 60px (Icon-only) | Hover / Focus: 300px (Smooth Expand)
+         ==================================================================== -->
+    <aside class="acet-desktop-sidebar" id="acetDesktopSidebar" aria-label="Navigasi Panel Admin">
+      
+      <!-- Top Section: Brand + Links -->
+      <div class="acet-sidebar-top">
+        
+        <!-- Logo / Brand Link -->
+        <a href="{{ route('admin.dashboard') }}" class="acet-brand-link" title="DeSiWeM Admin">
+          <div class="acet-brand-icon">
+            <span style="color: #fff; font-weight: 800; font-size: 0.75rem;">D</span>
+          </div>
+          <div class="acet-brand-text">
+            <span class="acet-brand-title">DeSiWeM</span>
+            <span class="acet-brand-sub">Panel Administrator</span>
+          </div>
+        </a>
 
-    <div class="mobile-nav-body">
-      <a href="{{ route('mading.index') }}" class="mobile-nav-link" target="_blank">
-        <span>Lihat Mading Publik</span>
-        <i class="bi bi-box-arrow-up-right small text-muted"></i>
-      </a>
-      <a href="{{ route('admin.dashboard') }}" class="mobile-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-        <span>Dashboard</span>
-        @if(request()->routeIs('admin.dashboard'))
-          <span class="mobile-nav-link-badge">Aktif</span>
-        @endif
-      </a>
-      <a href="{{ route('admin.categories') }}" class="mobile-nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
-        <span>Kelola Kategori</span>
-        @if(request()->routeIs('admin.categories*'))
-          <span class="mobile-nav-link-badge">Aktif</span>
-        @endif
-      </a>
-      <a href="{{ route('admin.articles') }}" class="mobile-nav-link {{ request()->routeIs('admin.articles*') || request()->routeIs('articles.*') ? 'active' : '' }}">
-        <span>Kelola Artikel</span>
-        @if(request()->routeIs('admin.articles*') || request()->routeIs('articles.*'))
-          <span class="mobile-nav-link-badge">Aktif</span>
-        @endif
-      </a>
-      <a href="{{ route('admin.report') }}" class="mobile-nav-link {{ request()->routeIs('admin.report*') ? 'active' : '' }}">
-        <span>Cetak Laporan</span>
-        @if(request()->routeIs('admin.report*'))
-          <span class="mobile-nav-link-badge">Aktif</span>
-        @endif
-      </a>
-    </div>
+        <!-- Main Navigation Links -->
+        <ul class="acet-nav-list">
+          
+          <!-- Dashboard -->
+          <li>
+            <a href="{{ route('admin.dashboard') }}" 
+               class="acet-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" 
+               title="Dashboard">
+              <div class="acet-nav-icon">
+                <i class="bi bi-grid-1x2"></i>
+              </div>
+              <span class="acet-nav-label">Dashboard</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
 
-    <div class="mobile-nav-footer">
-      @auth
-        <form method="POST" action="{{ route('logout') }}" class="w-100 mb-0">
+          <!-- Kelola Kategori -->
+          <li>
+            <a href="{{ route('admin.categories') }}" 
+               class="acet-nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}" 
+               title="Kelola Kategori">
+              <div class="acet-nav-icon">
+                <i class="bi bi-tags"></i>
+              </div>
+              <span class="acet-nav-label">Kelola Kategori</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+
+          <!-- Kelola Artikel -->
+          <li>
+            <a href="{{ route('admin.articles') }}" 
+               class="acet-nav-link {{ request()->routeIs('admin.articles*') || request()->routeIs('articles.*') ? 'active' : '' }}" 
+               title="Kelola Artikel">
+              <div class="acet-nav-icon">
+                <i class="bi bi-journal-richtext"></i>
+              </div>
+              <span class="acet-nav-label">Kelola Artikel</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+
+          <!-- Cetak Laporan -->
+          <li>
+            <a href="{{ route('admin.report') }}" 
+               class="acet-nav-link {{ request()->routeIs('admin.report*') ? 'active' : '' }}" 
+               title="Cetak Laporan">
+              <div class="acet-nav-icon">
+                <i class="bi bi-printer"></i>
+              </div>
+              <span class="acet-nav-label">Cetak Laporan</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+
+          <!-- Divider -->
+          <li class="acet-nav-divider"></li>
+
+          <!-- Mading Publik Link (Tab Baru) -->
+          <li>
+            <a href="{{ route('mading.index') }}" 
+               target="_blank" 
+               class="acet-nav-link" 
+               title="Buka Papan Mading Publik">
+              <div class="acet-nav-icon">
+                <i class="bi bi-box-arrow-up-right"></i>
+              </div>
+              <span class="acet-nav-label">Mading Publik</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- Bottom Dock: User Profile & Logout -->
+      <div class="acet-sidebar-bottom">
+        
+        <!-- User Profile Card -->
+        <div class="acet-profile-link" title="{{ auth()->user()->username ?? 'Administrator' }}">
+          <div class="acet-avatar">
+            {{ strtoupper(substr(auth()->user()->username ?? 'A', 0, 1)) }}
+            <span class="acet-avatar-online"></span>
+          </div>
+          <div class="acet-profile-details">
+            <span class="acet-profile-name">{{ auth()->user()->username ?? 'Administrator' }}</span>
+            <span class="acet-profile-role">{{ auth()->user()->role ?? 'Admin Sesi' }}</span>
+          </div>
+        </div>
+
+        <!-- Secure Logout Form -->
+        <form method="POST" action="{{ route('logout') }}" id="acetLogoutForm" class="m-0 p-0">
           @csrf
-          <button type="submit" class="mobile-nav-auth-btn w-100 text-center text-danger border-0">
-            Keluar Sesi
+          <button type="submit" class="acet-logout-button" title="Keluar Sesi">
+            <div class="acet-nav-icon">
+              <i class="bi bi-box-arrow-right"></i>
+            </div>
+            <span class="acet-nav-label">Keluar Sesi</span>
           </button>
         </form>
-      @endauth
-      <div class="text-center text-muted small mt-2">
-        &copy; {{ date('Y') }} DeSiWeM. Panel Admin.
+
       </div>
-    </div>
-  </div>
+    </aside>
 
-  <!-- Lexington Carbon Editorial Navigation Header (Matched with Public) -->
-  <header class="carbon-navbar sticky-top">
-    <div class="carbon-container d-flex align-items-center justify-content-between h-100">
-      <!-- Brand Wordmark -->
-      <a class="carbon-brand" href="{{ route('mading.index') }}">
-        <span class="carbon-brand-name">DeSiWeM</span>
-      </a>
-
-      <!-- Desktop Minimalist Nav Links -->
-      <nav class="carbon-nav-links d-none d-md-flex align-items-center">
-        <a href="{{ route('mading.index') }}" class="carbon-nav-link" target="_blank" title="Buka Mading Publik">
-          <span>Mading Publik</span>
-          <i class="bi bi-box-arrow-up-right ms-1 small text-muted"></i>
+    <!-- ====================================================================
+         MOBILE TOPBAR & FULLSCREEN DRAWER
+         ==================================================================== -->
+    <div class="w-100 d-flex flex-column d-lg-none">
+      <header class="acet-mobile-topbar">
+        <a href="{{ route('admin.dashboard') }}" class="acet-mobile-brand">
+          <div class="acet-brand-icon" style="width: 22px; height: 18px;">
+            <span style="color: #fff; font-weight: 800; font-size: 0.7rem;">D</span>
+          </div>
+          <span>DeSiWeM</span>
         </a>
-        <a href="{{ route('admin.dashboard') }}" class="carbon-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-          Dashboard
-        </a>
-        <a href="{{ route('admin.categories') }}" class="carbon-nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
-          Kategori
-        </a>
-        <a href="{{ route('admin.articles') }}" class="carbon-nav-link {{ request()->routeIs('admin.articles*') || request()->routeIs('articles.*') ? 'active' : '' }}">
-          Artikel
-        </a>
-        <a href="{{ route('admin.report') }}" class="carbon-nav-link {{ request()->routeIs('admin.report*') ? 'active' : '' }}">
-          Laporan
-        </a>
-      </nav>
-
-      <!-- Actions: Logout & Mobile Hamburger -->
-      <div class="d-flex align-items-center gap-2">
-        @auth
-          <form method="POST" action="{{ route('logout') }}" class="d-inline mb-0">
-            @csrf
-            <button type="submit" class="carbon-btn-ghost-sm" style="cursor: pointer;" title="Keluar">
-              <span>Keluar</span>
-              <i class="bi bi-box-arrow-right"></i>
-            </button>
-          </form>
-        @endauth
-
-        <!-- Mobile Hamburger Button -->
-        <button class="carbon-hamburger-btn d-md-none" id="mobileNavToggle" type="button" aria-label="Buka Menu">
-          <i class="bi bi-list fs-5"></i>
+        <button type="button" class="acet-mobile-menu-trigger" id="acetMobileToggle" aria-label="Buka Menu Panel">
+          <i class="bi bi-list fs-4"></i>
         </button>
+      </header>
+    </div>
+
+    <!-- Fullscreen Mobile Drawer -->
+    <div class="acet-mobile-drawer" id="acetMobileDrawer" aria-hidden="true">
+      <button type="button" class="acet-mobile-close-btn" id="acetMobileClose" aria-label="Tutup Menu">
+        <i class="bi bi-x-lg"></i>
+      </button>
+
+      <!-- Drawer Top -->
+      <div>
+        <a href="{{ route('admin.dashboard') }}" class="acet-brand-link mb-4">
+          <div class="acet-brand-icon">
+            <span style="color: #fff; font-weight: 800; font-size: 0.75rem;">D</span>
+          </div>
+          <div class="acet-brand-text" style="opacity: 1; max-width: 100%;">
+            <span class="acet-brand-title">DeSiWeM</span>
+            <span class="acet-brand-sub">Panel Administrator</span>
+          </div>
+        </a>
+
+        <ul class="acet-nav-list">
+          <li>
+            <a href="{{ route('admin.dashboard') }}" class="acet-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+              <div class="acet-nav-icon"><i class="bi bi-grid-1x2"></i></div>
+              <span class="acet-nav-label">Dashboard</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('admin.categories') }}" class="acet-nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+              <div class="acet-nav-icon"><i class="bi bi-tags"></i></div>
+              <span class="acet-nav-label">Kelola Kategori</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('admin.articles') }}" class="acet-nav-link {{ request()->routeIs('admin.articles*') || request()->routeIs('articles.*') ? 'active' : '' }}">
+              <div class="acet-nav-icon"><i class="bi bi-journal-richtext"></i></div>
+              <span class="acet-nav-label">Kelola Artikel</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('admin.report') }}" class="acet-nav-link {{ request()->routeIs('admin.report*') ? 'active' : '' }}">
+              <div class="acet-nav-icon"><i class="bi bi-printer"></i></div>
+              <span class="acet-nav-label">Cetak Laporan</span>
+              <span class="acet-active-dot"></span>
+            </a>
+          </li>
+          <li class="acet-nav-divider"></li>
+          <li>
+            <a href="{{ route('mading.index') }}" target="_blank" class="acet-nav-link">
+              <div class="acet-nav-icon"><i class="bi bi-box-arrow-up-right"></i></div>
+              <span class="acet-nav-label">Mading Publik</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Drawer Bottom -->
+      <div class="acet-sidebar-bottom">
+        <div class="acet-profile-link mb-2">
+          <div class="acet-avatar">
+            {{ strtoupper(substr(auth()->user()->username ?? 'A', 0, 1)) }}
+            <span class="acet-avatar-online"></span>
+          </div>
+          <div class="acet-profile-details">
+            <span class="acet-profile-name">{{ auth()->user()->username ?? 'Administrator' }}</span>
+            <span class="acet-profile-role">Sesi Aktif</span>
+          </div>
+        </div>
+        <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
+          @csrf
+          <button type="submit" class="acet-logout-button">
+            <div class="acet-nav-icon"><i class="bi bi-box-arrow-right"></i></div>
+            <span class="acet-nav-label">Keluar Sesi</span>
+          </button>
+        </form>
       </div>
     </div>
-  </header>
 
-  <!-- Main Content Container -->
-  <main class="container" style="padding-top: 2.5rem; padding-bottom: 4rem;">
-    <div class="admin-layout">
-      
-      <!-- Admin Sidebar Navigation (WhatsApp Web-Themed Animated) -->
-      <aside class="admin-sidebar">
-        <div class="sidebar-title">
-          <i class="bi bi-grid-fill"></i> Menu Panel
-        </div>
-        
-        <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-          <span class="wa-icon-box">
-            <i class="bi bi-speedometer2"></i>
-          </span>
-          <span>Dashboard</span>
-        </a>
-        
-        <a href="{{ route('admin.categories') }}" class="sidebar-link {{ request()->routeIs('admin.categories') ? 'active' : '' }}">
-          <span class="wa-icon-box">
-            <i class="bi bi-folder2-open"></i>
-          </span>
-          <span>Kelola Kategori</span>
-        </a>
-        
-        <a href="{{ route('admin.articles') }}" class="sidebar-link {{ request()->routeIs('admin.articles') || request()->routeIs('articles.*') ? 'active' : '' }}">
-          <span class="wa-icon-box">
-            <i class="bi bi-journal-richtext"></i>
-          </span>
-          <span>Kelola Artikel</span>
-        </a>
-        
-        <a href="{{ route('admin.report') }}" class="sidebar-link {{ request()->routeIs('admin.report') ? 'active' : '' }}">
-          <span class="wa-icon-box">
-            <i class="bi bi-printer"></i>
-          </span>
-          <span>Cetak Laporan</span>
-        </a>
-        
-        <div class="sidebar-title" style="margin-top: 1rem;">
-          <i class="bi bi-shield-lock-fill"></i> Sesi Anda
-        </div>
-        
-        <form action="{{ route('logout') }}" method="POST" id="logoutForm" class="d-none">
-            @csrf
-        </form>
-        <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();" id="logout-btn" class="sidebar-link sidebar-link-logout">
-          <span class="wa-icon-box">
-            <i class="bi bi-box-arrow-right"></i>
-          </span>
-          <span>Logout</span>
-        </a>
-
-        <!-- WhatsApp Web User Profile Panel at Bottom -->
-        <div class="wa-user-panel">
-          <div class="wa-user-avatar">
-            {{ strtoupper(substr(auth()->user()->username ?? 'A', 0, 1)) }}
-            <span class="wa-online-dot" title="Online"></span>
-          </div>
-          <div class="wa-user-info">
-            <span class="wa-user-name">{{ auth()->user()->username ?? 'Administrator' }}</span>
-            <span class="wa-user-role">Sesi Aktif</span>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Admin Main Panel Content -->
-      <section class="admin-main">
+    <!-- ====================================================================
+         MAIN CONTENT AREA
+         ==================================================================== -->
+    <main class="acet-main-content">
+      <div class="acet-content-body">
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
+          <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
+          <div class="alert alert-danger alert-dismissible fade show rounded-3 border-0 shadow-sm mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         @endif
 
         @yield('content')
-      </section>
-    </div>
-  </main>
+      </div>
+    </main>
 
-  <!-- Animation & Script Dependencies -->
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleBtn = document.getElementById('mobileNavToggle');
-        const closeBtn = document.getElementById('mobileNavClose');
-        const overlay = document.getElementById('mobileNavOverlay');
-
-        function openMenu() {
-            if (!overlay) return;
-            overlay.classList.add('is-open');
-            overlay.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('mobile-nav-locked');
-        }
-
-        function closeMenu() {
-            if (!overlay) return;
-            overlay.classList.remove('is-open');
-            overlay.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('mobile-nav-locked');
-        }
-
-        if (toggleBtn) toggleBtn.addEventListener('click', openMenu);
-        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && overlay && overlay.classList.contains('is-open')) {
-                closeMenu();
-            }
-        });
-    });
-  </script>
+  <script src="{{ asset('js/admin-sidebar.js') }}"></script>
   @yield('scripts')
 </body>
 </html>
